@@ -5,6 +5,7 @@ import hashlib
 from base64 import urlsafe_b64encode
 from cryptography.fernet import Fernet
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
+from cryptography.hazmat.primitives import hashes  # ✅ Added import
 import streamlit as st
 
 DATA_FILE = "secure_data.json"
@@ -32,7 +33,7 @@ def save_data(data):
 
 def generate_key(passkey):
     kdf = PBKDF2HMAC(
-        algorithm=hashlib.sha256(),
+        algorithm=hashes.SHA256(),  # ✅ Fixed here
         length=32,
         salt=SALT,
         iterations=100000
